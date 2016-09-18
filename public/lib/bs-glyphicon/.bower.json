@@ -1,0 +1,38 @@
+{
+  "name": "bs-glyphicon",
+  "version": "1.0.8",
+  "authors": [
+    "Miguel Ortega Moreno <miguel.ortega.moreno5@gmail.com>"
+  ],
+  "description": "Glyphicon using polymer",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "seed",
+    "glyphicon"
+  ],
+  "main": "bs-glyphicon.html",
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "homepage": "https://github.com/Mortega5/bs-glyphicon",
+  "ignore": [
+    "/.*",
+    "/test/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.2.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0"
+  },
+  "_release": "1.0.8",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.8",
+    "commit": "05267ee6a43c17b3a45c2ef12e732046c1666086"
+  },
+  "_source": "https://github.com/Mortega5/bootstrap-glyphicon.git",
+  "_target": "^1.0.8",
+  "_originalSource": "bootstrap-glyphicon",
+  "_direct": true
+}

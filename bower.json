@@ -1,0 +1,22 @@
+{
+  "name": "72server",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Howell <github@foo.ro>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "bootstrap-markdown": "^2.10.0",
+    "bs-glyphicon": "bootstrap-glyphicon#^1.0.8"
+  }
+}
