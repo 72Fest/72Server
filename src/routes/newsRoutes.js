@@ -24,7 +24,7 @@ var router = function () {
                 };
                 collection.insert(newsItem, function (err, results) {
 
-                    res.redirect('/news/add');
+                    res.redirect('/news');
 
                 });
 
