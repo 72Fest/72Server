@@ -19,12 +19,12 @@ var router = function () {
                 var newsItem = {
                   title: req.body.newsTitle,
                   content: req.body.article,
-                  date: new Date()
+                  timestamp: new Date()
                 };
                      collection.insert(newsItem, function (err, results) {
-//                    req.login(results.ops[0], function () {
-//                        res.redirect('/auth/profile');
-//                    });
+
+                      res.redirect('/news/add');
+
                 });
                 
             });
