@@ -1,4 +1,5 @@
 var express = require('express');
+var methodOverride = require('express-method-override');
 var bodyParser = require('body-parser');
 
 var app = express();
@@ -20,6 +21,7 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
+app.use(methodOverride());
 app.use('/teams', teamRouter);
 app.use('/news', newsRouter);
 app.get('/', function (req, res) {

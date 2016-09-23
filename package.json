@@ -13,6 +13,7 @@
     "body-parser": "^1.15.2",
     "ejs": "^2.5.2",
     "express": "^4.14.0",
+    "express-method-override": "0.0.3",
     "mongodb": "^2.2.10"
   },
   "devDependencies": {

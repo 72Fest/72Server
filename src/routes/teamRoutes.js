@@ -9,7 +9,7 @@ teamRouter.route('/')
             'mongodb://localhost:27017/72Fest';
         mongodb.connect(url, function (err, db) {
             var collection = db.collection('teams');
-            collection.find({}).toArray(
+            collection.find({}).sort('teamName', 1).toArray(
                 function (err, results) {
                     //res.json(results);
                     res.render('teamListView', {
