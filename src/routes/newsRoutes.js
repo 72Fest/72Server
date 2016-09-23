@@ -3,7 +3,7 @@ var newsRouter = express.Router();
 var markdown = require('markdown').markdown;
 var mongodb = require('mongodb').MongoClient;
 var objectId = require('mongodb').ObjectID;
-
+ var url ='mongodb://localhost:27017/72Fest';
 var router = function () {
         newsRouter.route('/add')
             .get(function (req, res) {
@@ -12,8 +12,7 @@ var router = function () {
 
         newsRouter.route('/')
             .post(function (req, res) {
-                var url =
-                    'mongodb://localhost:27017/72Fest';
+              
                 mongodb.connect(url, function (err, db) {
                     console.log(req.body);
                     var collection = db.collection('news');
@@ -34,8 +33,6 @@ var router = function () {
 
         .get(function (req, res) {
 
-            var url =
-                'mongodb://localhost:27017/72Fest';
             mongodb.connect(url, function (err, db) {
                 var collection = db.collection('news');
                 collection.find({}).toArray(
@@ -57,8 +54,7 @@ var router = function () {
             .get(function (req, res) {
 
                 var id = new objectId(req.params.id);
-                var url =
-                    'mongodb://localhost:27017/72Fest';
+
                 mongodb.connect(url, function (err, db) {
                     var collection = db.collection('news');
                     collection.findOne({
@@ -75,8 +71,7 @@ var router = function () {
             .put(function (req, res) {
                     console.log('put');
                     var id = new objectId(req.params.id);
-                    var url =
-                        'mongodb://localhost:27017/72Fest';
+                   
                     mongodb.connect(url, function (err, db) {
                         var collection = db.collection('news');
                          collection.findOne({

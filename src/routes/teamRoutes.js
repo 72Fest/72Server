@@ -10,11 +10,11 @@ teamRouter.route('/')
             var collection = db.collection('teams');
             collection.find({}).sort('teamName', 1).toArray(
                 function (err, results) {
-                    res.json(results);
-//                    res.render('teamListView', {
-//                        title: 'Teams',
-//                        teams: results
-//                    });
+                    //res.json(results);
+                    res.render('teamListView', {
+                        title: 'Teams',
+                        teams: results
+                    });
                 });
         });
 
