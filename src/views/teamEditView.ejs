@@ -6,12 +6,13 @@
 		<title>Storystrap Template</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
 		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" media="screen" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.2.1/css/bootstrap-markdown.min.css">
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-		<link href="css/styles.css" rel="stylesheet">
+		<link href="/css/styles.css" rel="stylesheet">
 	</head>
 	<body>
 <header class="navbar navbar-bright navbar-fixed-top" role="banner">
@@ -52,11 +53,10 @@
   <div class="container">
     <div class="row">
       <div class="col-md-7">
-        <h1>Teams
+        <h2>News
           <p class="lead"></p>
-        </h1>
+        </h2>
       </div>
-     
     </div> 
   </div><!-- /cont -->
   
@@ -83,45 +83,30 @@
           
           <!--/stories-->
           
-          <% for(var i=0; i<teams.length; i++){%>
+         
           <div class="row">    
-            <br>
-            <div class="col-md-2 col-sm-3 text-center">
-              <a class="story-title" href="#"><img alt="" src="/images/teamlogos/<%=teams[i].logo%>" style="width:100px;height:100px" class="img-circle"></a>
-            </div>
-            <div class="col-md-10 col-sm-9">
-              <h3><%=teams[i].teamName%></h3>
-              <div class="row">
-                <div class="col-xs-9">
-                 <%=teams[i].bio%>
-                 </div>
- 
-                <div class="col-xs-3"></div>
-                
-              </div>
-              
-              <br><br>
-            </div>
-                            <div class="col-xs-9">
-                            <h4>Films</h3>
-                 <% for(var j=0; j<teams[i].films.length; j++){
-    var film = teams[i].films[j];%>
-                <dl class='dl-horizontal'>
-                 <dt>Title</dt>
-                 <dd><%=film.title%></dd>
-                <dt>Year</dt>
-                 <dd><%=film.year%></dd>
-                 <dt>URL</dt>
-                 <dd><%=film.url%></dd>
-                </dl>
-                 <%}%>
-                  </div>
+     <form name="signupform"
+                 action="/teams/<%=teams._id%>"
+                 method="post">
+                 <input type="hidden" name="_method" value="put">
+         Name: <input class="form-control" name="newsTitle" id="newsTitle" value="<%=teams.teamName%>"><br/>
+                   Bio: <textarea class="form-control" cols=90 rows=15 name="article" id="bio"><%=teams.bio%></textarea><br />
+                      <% for (var i=0; i<teams.films.length; i++){
+                    film = teams.films[i];
+                    %>
+                   
                     <div class="col-xs-9">
-                  <a class="btn btn-default" href="/teams/<%=teams[i]._id%>" role="button">Edit</a>
-              </div>
+                    Title: <input class="form-control" name="filmTitle" id="filmTitle" value="<%=film.title%>"><br/>
+                    Year: <input class="form-control" name="filmYear" id="filmYear" value="<%=film.year%>"><br/>
+                    URL: <input class="form-control" name="filmUrl" id="filmUrl" value="<%=film.url%>"><br/>
+                    </div>
+                 <%}%>
+                    <div class="col-xs-9">
+                    <input type="submit" value="Save">
+         </div>
+              </form>
           </div>
           <hr>
-          <%}%>
          
           <!--/stories-->
           
@@ -145,13 +130,7 @@
   <div class="row">
     <div class="col col-sm-12">
       
-      <h1>Follow Us</h1>
-      <div class="btn-group">
-       <a class="btn btn-twitter btn-lg" href="#"><i class="icon-twitter icon-large"></i> Twitter</a>
-	   <a class="btn btn-facebook btn-lg" href="#"><i class="icon-facebook icon-large"></i> Facebook</a>
-	   <a class="btn btn-google-plus btn-lg" href="#"><i class="icon-google-plus icon-large"></i> Google+</a>
-      </div>
-      
+    
     </div>
   </div>
 </div>
@@ -161,25 +140,16 @@
 <hr>
 
 <footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-6">
-        <ul class="list-inline">
-          <li><i class="icon-facebook icon-2x"></i></li>
-          <li><i class="icon-twitter icon-2x"></i></li>
-          <li><i class="icon-google-plus icon-2x"></i></li>
-          <li><i class="icon-pinterest icon-2x"></i></li>
-        </ul>
-        
-      </div>
-      <div class="col-sm-6">
-          <p class="pull-right">Built with <i class="icon-heart-empty"></i> at <a href="http://www.bootply.com">Bootply</a></p>      
-      </div>
-    </div>
-  </div>
+  
 </footer>
 	<!-- script references -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
+		<script src="/lib/jquery/dist/jquery.min.js"></script>
+		<script src="/lib/js/bootstrap.min.js"></script>
+		<script src="http://toopay.github.io/bootstrap-markdown/js/markdown.js"></script>
+<script src="/lib/bootstrap-markdown/js/to-markdown.js"></script>
+
+
+<script src="/lib/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+
 	</body>
 </html>
