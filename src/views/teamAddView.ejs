@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>Team Editor</title>
+		<title>Storystrap Template</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -88,45 +88,16 @@
           
           <!--/stories-->
           
-         
-          <div class="row"> 
-          <div class="col-md-5">
-          <h3>Add Logo</h3>
-          <img src="/images/teamlogos/<%=teams.logo%>">
-          </div>  
-           <div class="col-md-5">  
-                  <h3>Add Film</h3>
-                   <form action="/teams/<%=teams._id%>/films" method="post">
-                   <div class="form-group">
-                    Title: <input class="form-control" name="filmTitle" id="filmTitle" ><br/>
-                    Year: <input class="form-control" name="filmYear" id="filmYear" ><br/>
-                    URL: <input class="form-control" name="filmUrl" id="filmUrl"><br/>
-                    <input type="submit" value="Add Film">
-                    </div>
-               </form>
-            </div> 
-                    </div>
+
     <div class="row">
-                <h3>Edit Team Info</h3>
                  <form name="teamEditForm"
-                 action="/teams/<%=teams._id%>"
+                 action="/teams"
                  method="post"
                  >
-                 <input type="hidden" name="_method" value="put">
-        <br> Name: <input class="form-control" name="teamName" id="teamName" value="<%=teams.teamName%>"><br/>
-                   Bio: <textarea class="form-control" cols=90 rows=15 name="bio" id="bio"><%=teams.bio%></textarea><br />
-                      <% for (var i=0; i<teams.films.length; i++){
-                    film = teams.films[i];
-                    %>
-                   
-                    <div class="row form-group">
-                    <div class="col-md-7">
-                    Title: <input class="form-control" name="filmTitle" id="filmTitle" value="<%=film.title%>"><br/>
-                    Year: <input class="form-control" name="filmYear" id="filmYear" value="<%=film.year%>"><br/>
-                    URL: <input class="form-control" name="filmUrl" id="filmUrl" value="<%=film.url%>"><br/>
-                    </div>
-                    </div>
-                 <%}%>
+                 <input type="hidden" name="_method" value="post">
+        <br> Name: <input class="form-control" name="teamName" id="teamName" ><br/>
+                   Bio: <textarea class="form-control" cols=90 rows=15 name="bio" id="bio"></textarea><br />
+             
                     <div class="col-xs-9">
                     <input type="submit" value="Save">
          </div>
@@ -138,7 +109,7 @@
           <!--/stories-->
           
           
-         
+      
         
           
         </div>
