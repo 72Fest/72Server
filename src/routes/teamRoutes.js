@@ -3,6 +3,10 @@ var formidable = require('formidable');
 var teamRouter = express.Router();
 var mongodb = require('mongodb').MongoClient;
 var objectId = require('mongodb').ObjectID;
+var easyimg = require('easyimage')
+var path = require('path');
+var fs = require('fs');
+var thumbnailDimension = 200;
 var url = 'mongodb://localhost:27017/72Fest';
 teamRouter.route('/')
     .get(function (req, res) {
@@ -52,6 +56,55 @@ teamRouter.route('/add')
         res.render('teamAddView');
     });
 
+teamRouter.route('/logo/:id')
+    .post(function (req, res) {
+        var id = new objectId(req.params.id);
+        var form = new formidable.IncomingForm();
+        form.uploadDir = 'public/images/teamlogos';
+        form.on('file', function (fields, file) {
+
+            mongodb.connect(url, function (err, db) {
+                var collection = db.collection('teams');
+                collection.findOne({
+                        _id: id
+                    },
+                    function (err, results) {
+                        var newPath = path.join(form.uploadDir, results.teamName + path.extname(file.name))
+                        fs.rename(file.path, newPath, function () {
+                            console.log('callback');
+                            easyimg.thumbnail({
+                                width: thumbnailDimension,
+                                height: thumbnailDimension,
+                                src: newPath,
+                                dst: form.uploadDir + results.teamName + '-thumb' + path.extname(file.name),
+                                quality: 85
+                            }, function (err, img) {
+                                console.log('help');
+                                if (err) {
+                                    console.log('failed');
+                                } else {
+                                    console.log(img);
+                                }
+                            });
+                        });
+                        results.logo = results.teamName + path.extname(file.name);
+                        collection.updateOne({
+                            _id: id
+                        }, results);
+
+
+
+                    });
+            });
+
+        });
+
+        form.on('end', function (fields, file) {
+            res.redirect('/teams/' + id)
+        });
+        form.parse(req);
+    });
+
 teamRouter.route('/:id')
     .get(function (req, res) {
 
@@ -81,22 +134,20 @@ teamRouter.route('/:id')
                 result.bio = req.body.bio;
                 var filmArray = new Array();
 
-                if(result.films.length > 0){
-                    if(Array.isArray(req.body.filmTitle))
-                    {
-                                       for (var i = 0; i < req.body.filmTitle.length; i++) {
-                    result.films[i].title = req.body.filmTitle[i];
-                    result.films[i].year = req.body.filmYear[i];
-                    result.films[i].url = req.body.filmUrl[i];
-                }
+                if (result.films.length > 0) {
+                    if (Array.isArray(req.body.filmTitle)) {
+                        for (var i = 0; i < req.body.filmTitle.length; i++) {
+                            result.films[i].title = req.body.filmTitle[i];
+                            result.films[i].year = req.body.filmYear[i];
+                            result.films[i].url = req.body.filmUrl[i];
+                        }
+                    } else {
+                        result.films[0].title = req.body.filmTitle;
+                        result.films[0].year = req.body.filmYear;
+                        result.films[0].url = req.body.filmUrl;
                     }
-                else{
-                    result.films[0].title = req.body.filmTitle;
-                    result.films[0].year = req.body.filmYear;
-                    result.films[0].url = req.body.filmUrl;
                 }
-                }
-                
+
 
                 collection.updateOne({
                     _id: id

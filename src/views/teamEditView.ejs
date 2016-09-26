@@ -93,6 +93,13 @@
           <div class="col-md-5">
           <h3>Add Logo</h3>
           <img src="/images/teamlogos/<%=teams.logo%>">
+          <div class="form-group">
+             <form action="/teams/logo/<%=teams._id%>" name="logo" method="post" enctype="multipart/form-data">
+             <input type="file" name="file" id="file">
+             <button type="submit">Save Logo</button>
+              </form>
+              
+          </div>
           </div>  
            <div class="col-md-5">  
                   <h3>Add Film</h3>
