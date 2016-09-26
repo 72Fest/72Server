@@ -76,11 +76,11 @@ teamRouter.route('/logo/:id')
                                 width: thumbnailDimension,
                                 height: thumbnailDimension,
                                 src: newPath,
-                                dst: form.uploadDir + results.teamName + '-thumb' + path.extname(file.name),
+                                dst: path.join(form.uploadDir, results.teamName + '-thumb' + path.extname(file.name)),
                                 quality: 85
                             }).then(function (img) {
                                 console.log('help');
-                                console.log('but it worked:' + img);
+                                console.log(img);
                             }, function (err) {
                                 console.log('failed');
                             });
