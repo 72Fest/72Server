@@ -78,13 +78,11 @@ teamRouter.route('/logo/:id')
                                 src: newPath,
                                 dst: form.uploadDir + results.teamName + '-thumb' + path.extname(file.name),
                                 quality: 85
-                            }, function (err, img) {
+                            }).then(function (img) {
                                 console.log('help');
-                                if (err) {
-                                    console.log('failed');
-                                } else {
-                                    console.log(img);
-                                }
+                                console.log('but it worked:' + img);
+                            }, function (err) {
+                                console.log('failed');
                             });
                         });
                         results.logo = results.teamName + path.extname(file.name);
