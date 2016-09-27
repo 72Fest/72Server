@@ -34,7 +34,7 @@ var router = function () {
 
         mongodb.connect(url, function (err, db) {
             var collection = db.collection('news');
-            collection.find({}).toArray(
+            collection.find({}).sort({timestamp: -1}).toArray(
                 function (err, results) {
                     results.forEach(function (result) {
                         result.content = markdown.toHTML(result.content);
