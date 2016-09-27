@@ -71,7 +71,7 @@ teamRouter.route('/logo/:id')
                     function (err, results) {
                         var newPath = path.join(form.uploadDir, results.teamName + path.extname(file.name))
                         fs.rename(file.path, newPath, function () {
-                            console.log('callback');
+                            
                             easyimg.thumbnail({
                                 width: thumbnailDimension,
                                 height: thumbnailDimension,
@@ -79,8 +79,7 @@ teamRouter.route('/logo/:id')
                                 dst: path.join(form.uploadDir, results.teamName + '-thumb' + path.extname(file.name)),
                                 quality: 85
                             }).then(function (img) {
-                                console.log('help');
-                                console.log(img);
+                                
                             }, function (err) {
                                 console.log('failed');
                             });
@@ -157,6 +156,27 @@ teamRouter.route('/:id')
         });
     });
 
+teamRouter.route('/:id/delete')
+.get(function(req,res){
+   var id = new objectId(req.params.id);
+    mongodb.connect(url, function (err, db) {
+            var collection = db.collection('teams');
+            var archiveTeams = db.collection('teams_archive');
+            collection.findOne({
+                _id: id
+            }, function (err, result) {
+               
+                archiveTeams.insert(result, function(err, result){
+                 collection.removeOne({_id: id});
+                    res.redirect('/teams');
+                });
+            });
+
+
+        });
+    
+});
+
 teamRouter.route('/:id/films')
     .post(function (req, res) {
         var id = new objectId(req.params.id);
@@ -165,7 +185,6 @@ teamRouter.route('/:id/films')
             collection.findOne({
                 _id: id
             }, function (err, result) {
-                console.log(result);
                 var film = {
                     title: req.body.filmTitle,
                     year: req.body.filmYear,

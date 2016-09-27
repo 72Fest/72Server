@@ -86,7 +86,8 @@
           
           <% for(var i=0; i<teams.length; i++){%>
           <div class="row">    
-            <br>
+           <div class="row">
+             <br>
             <div class="col-md-2 col-sm-3 text-center">
               <a class="story-title" href="#"><img alt="" src="/images/teamlogos/<%=teams[i].logo%>" style="width:100px;height:100px" class="img-circle"></a>
             </div>
@@ -104,7 +105,7 @@
               <br><br>
             </div>
                             <div class="col-xs-9">
-                            <h4>Films</h3>
+                            <h4>Films</h4>
                  <% for(var j=0; j<teams[i].films.length; j++){
     var film = teams[i].films[j];%>
                 <dl class='dl-horizontal'>
@@ -117,8 +118,14 @@
                 </dl>
                  <%}%>
                   </div>
-                    <div class="col-xs-9">
-                  <a class="btn btn-default" href="/teams/<%=teams[i]._id%>" role="button">Edit</a>
+                   </div>
+                   <div class="row">
+                    <div class="col-md-8">
+                  <a class="btn btn-warning" href="/teams/<%=teams[i]._id%>" role="button"><span class="glyphicon glyphicon-edit"></span></a>
+              </div>
+                   <div class="col-md-1">
+                       <a class="btn btn-danger" href="/teams/<%=teams[i]._id%>/delete" role="button"><span class="glyphicon glyphicon-trash"></span></a>
+              </div>
               </div>
           </div>
           <hr>

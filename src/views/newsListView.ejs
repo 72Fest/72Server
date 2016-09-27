@@ -90,9 +90,13 @@
                   <%-news[i].content%>
              </div>
               <div class="row">
-                <div class="col-xs-9">
-                 <a class="btn btn-default" href="/news/<%=news[i]._id%>" role="button">Edit</a>
-                 </div>
+                 <div class="col-md-8">
+                  <a class="btn btn-warning" href="/news/<%=news[i]._id%>" role="button"><span class="glyphicon glyphicon-edit"></span></a>
+              </div>
+                   <div class="col-md-1">
+                       <a class="btn btn-danger" href="/news/<%=news[i]._id%>/delete" role="button"><span class="glyphicon glyphicon-trash"></span></a>
+              </div>
+               
                 <div class="col-xs-3"></div>
               </div>
               <br><br>

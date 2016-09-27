@@ -89,6 +89,26 @@ var router = function () {
 
             });
         });
+    
+    newsRouter.route('/:id/delete')
+.get(function(req,res){
+   var id = new objectId(req.params.id);
+    mongodb.connect(url, function (err, db) {
+            var collection = db.collection('news');
+           
+            collection.findOne({
+                _id: id
+            }, function (err, result) {
+                 collection.removeOne({_id: id}, function(err){
+                          res.redirect('/news'); 
+                 });
+              
+            });
+
+
+        });
+    
+});
     return newsRouter;
 };
 
