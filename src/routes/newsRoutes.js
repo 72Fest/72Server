@@ -14,7 +14,7 @@ var router = function () {
         .post(function (req, res) {
 
             mongodb.connect(url, function (err, db) {
-                console.log(req.body);
+               
                 var collection = db.collection('news');
                 var newsItem = {
                     title: req.body.newsTitle,
@@ -28,7 +28,6 @@ var router = function () {
                 });
 
             });
-            console.log('did it');
         })
 
     .get(function (req, res) {
@@ -40,8 +39,7 @@ var router = function () {
                     results.forEach(function (result) {
                         result.content = markdown.toHTML(result.content);
                     });
-                    //console.log(results);
-                    //res.json(results);
+               
                     res.render('newsListView', {
                         title: 'News',
                         news: results
@@ -69,7 +67,6 @@ var router = function () {
             });
         })
         .put(function (req, res) {
-            console.log('put');
             var id = new objectId(req.params.id);
 
             mongodb.connect(url, function (err, db) {
