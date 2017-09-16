@@ -10,7 +10,13 @@ var teamRouter = require('./src/routes/teamRoutes');
 var newsRouter = require('./src/routes/newsRoutes')();
 
 //var teamRouter = require('./src/routes/teamRoutes');
-
+// rewrite requests that may be coming from an ELB
+app.use((req, res, next) => {
+    if (req.url && (typeof req.url === 'string')) {
+        req.url = req.url.replace(/^\/cms/, '');
+    }
+    next();
+});
 app.use(express.static('public'));
 app.use(express.static('bower_components'));
 
