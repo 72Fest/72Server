@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<meta charset="utf-8">
-		<title>Team Editor</title>
-		<meta name="generator" content="Bootply" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link href="/css/bootstrap.min.css" rel="stylesheet">
-		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" media="screen" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.2.1/css/bootstrap-markdown.min.css">
-		<!--[if lt IE 9]>
-			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
-		<link href="/css/styles.css" rel="stylesheet">
-		<style>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>Team Editor</title>
+        <meta name="generator" content="Bootply" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" media="screen" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.2.1/css/bootstrap-markdown.min.css">
+        <!--[if lt IE 9]>
+            <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link href="/css/styles.css" rel="stylesheet">
+        <style>
             img {
                 max-width: 100%;
             }
         </style>
-	</head>
-	<body>
+    </head>
+    <body>
 <header class="navbar navbar-bright navbar-fixed-top" role="banner">
   <div class="container">
     <div class="navbar-header">
@@ -54,7 +54,7 @@
   </div>
 </header>
 
-<div id="masthead">  
+<div id="masthead">
   <div class="container">
     <div class="row">
       <div class="col-md-7">
@@ -62,46 +62,46 @@
           <p class="lead"></p>
         </h2>
       </div>
-    </div> 
+    </div>
   </div><!-- /cont -->
-  
+
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="top-spacer"> </div>
       </div>
-    </div> 
+    </div>
   </div><!-- /cont -->
-  
+
 </div>
 
 
 <div class="container">
   <div class="row">
-    
-    <div class="col-md-12"> 
-      
+
+    <div class="col-md-12">
+
       <div class="panel">
         <div class="panel-body">
-          
-          
-          
+
+
+
           <!--/stories-->
-          
-         
-          <div class="row"> 
+
+
+          <div class="row">
           <div class="col-md-5">
           <h3>Add Logo</h3>
-          <img src="/images/teamlogos/<%=teams.logo%>">
+          <img src="<%=baseLogoUrl%>/<%=teams.logo%>">
           <div class="form-group">
              <form action="/teams/logo/<%=teams._id%>" name="logo" method="post" enctype="multipart/form-data">
              <input type="file" name="file" id="file">
              <button type="submit">Save Logo</button>
               </form>
-              
+
           </div>
-          </div>  
-           <div class="col-md-5">  
+          </div>
+           <div class="col-md-5">
                   <h3>Add Film</h3>
                    <form action="/teams/<%=teams._id%>/films" method="post">
                    <div class="form-group">
@@ -111,7 +111,7 @@
                     <input type="submit" value="Add Film">
                     </div>
                </form>
-            </div> 
+            </div>
                     </div>
     <div class="row">
                 <h3>Edit Team Info</h3>
@@ -125,7 +125,7 @@
                       <% for (var i=0; i<teams.films.length; i++){
                     film = teams.films[i];
                     %>
-                   
+
                     <div class="row form-group">
                     <div class="col-md-7">
                     Title: <input class="form-control" name="filmTitle" id="filmTitle" value="<%=film.title%>"><br/>
@@ -138,33 +138,33 @@
                     <input type="submit" value="Save">
          </div>
               </form>
-              
+
           </div>
           <hr>
-         
+
           <!--/stories-->
-          
-          
-         
-        
-          
+
+
+
+
+
         </div>
       </div>
-                                                                                       
-	                                                
-                                                      
-   	</div><!--/col-12-->
+
+
+
+       </div><!--/col-12-->
   </div>
 </div>
-                                                
-                                                                                
+
+
 <hr>
 
 <div class="container" id="footer">
   <div class="row">
     <div class="col col-sm-12">
-      
-    
+
+
     </div>
   </div>
 </div>
@@ -174,16 +174,16 @@
 <hr>
 
 <footer>
-  
+
 </footer>
-	<!-- script references -->
-		<script src="/lib/jquery/dist/jquery.min.js"></script>
-		<script src="/lib/js/bootstrap.min.js"></script>
-		<script src="http://toopay.github.io/bootstrap-markdown/js/markdown.js"></script>
+    <!-- script references -->
+        <script src="/lib/jquery/dist/jquery.min.js"></script>
+        <script src="/lib/js/bootstrap.min.js"></script>
+        <script src="http://toopay.github.io/bootstrap-markdown/js/markdown.js"></script>
 <script src="/lib/bootstrap-markdown/js/to-markdown.js"></script>
 
 
 <script src="/lib/bootstrap-markdown/js/bootstrap-markdown.js"></script>
 
-	</body>
+    </body>
 </html>

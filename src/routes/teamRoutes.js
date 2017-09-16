@@ -5,9 +5,16 @@ var mongodb = require('mongodb').MongoClient;
 var objectId = require('mongodb').ObjectID;
 var easyimg = require('easyimage')
 var path = require('path');
-var fs = require('fs');
+var fs = require('fs-extra');
+var config = require('../../config.json');
 var thumbnailDimension = 200;
+var LOGOS_PATH = 'public/images/teamlogos';
+var S3_LOGOS_PATH = path.join(config.baseUrl, 'logos');
 var url = 'mongodb://localhost:27017/72Fest';
+
+//ensure path for logos exists
+fs.ensureDir(LOGOS_PATH);
+
 teamRouter.route('/')
     .get(function (req, res) {
         mongodb.connect(url, function (err, db) {
@@ -18,7 +25,8 @@ teamRouter.route('/')
                     //res.json(results);
                     res.render('teamListView', {
                         title: 'Teams',
-                        teams: results
+                        teams: results,
+                        baseLogoUrl: S3_LOGOS_PATH
                     });
                 });
         });
@@ -60,7 +68,7 @@ teamRouter.route('/logo/:id')
     .post(function (req, res) {
         var id = new objectId(req.params.id);
         var form = new formidable.IncomingForm();
-        form.uploadDir = 'public/images/teamlogos';
+        form.uploadDir = LOGOS_PATH;
         form.on('file', function (fields, file) {
 
             mongodb.connect(url, function (err, db) {
@@ -71,7 +79,7 @@ teamRouter.route('/logo/:id')
                     function (err, results) {
                         var newPath = path.join(form.uploadDir, results.teamName + path.extname(file.name))
                         fs.rename(file.path, newPath, function () {
-                            
+
                             easyimg.thumbnail({
                                 width: thumbnailDimension,
                                 height: thumbnailDimension,
@@ -79,7 +87,7 @@ teamRouter.route('/logo/:id')
                                 dst: path.join(form.uploadDir, results.teamName + '-thumb' + path.extname(file.name)),
                                 quality: 85
                             }).then(function (img) {
-                                
+
                             }, function (err) {
                                 console.log('failed');
                             });
@@ -115,7 +123,8 @@ teamRouter.route('/:id')
                 function (err, results) {
                     res.render('teamEditView', {
                         title: 'Teams',
-                        teams: results
+                        teams: results,
+                        baseLogoUrl: S3_LOGOS_PATH
                     });
                 });
         });
@@ -165,7 +174,7 @@ teamRouter.route('/:id/delete')
             collection.findOne({
                 _id: id
             }, function (err, result) {
-               
+
                 archiveTeams.insert(result, function(err, result){
                  collection.removeOne({_id: id});
                     res.redirect('/teams');
@@ -174,7 +183,7 @@ teamRouter.route('/:id/delete')
 
 
         });
-    
+
 });
 
 teamRouter.route('/:id/films')
