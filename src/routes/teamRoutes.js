@@ -3,13 +3,16 @@ var formidable = require('formidable');
 var teamRouter = express.Router();
 var mongodb = require('mongodb').MongoClient;
 var objectId = require('mongodb').ObjectID;
-var easyimg = require('easyimage')
+var sharp = require('sharp');
 var path = require('path');
 var fs = require('fs-extra');
 var config = require('../../config.json');
+var Cloud = require('../cloud');
+var cloud = new Cloud();
 var thumbnailDimension = 200;
 var LOGOS_PATH = 'public/images/teamlogos';
 var S3_LOGOS_PATH = path.join(config.baseUrl, 'logos');
+var S3_BUCKET_PATH = 'teams/logos';
 var url = 'mongodb://localhost:27017/72Fest';
 
 //ensure path for logos exists
@@ -64,51 +67,48 @@ teamRouter.route('/add')
         res.render('teamAddView');
     });
 
-teamRouter.route('/logo/:id')
-    .post(function (req, res) {
-        var id = new objectId(req.params.id);
-        var form = new formidable.IncomingForm();
-        form.uploadDir = LOGOS_PATH;
-        form.on('file', function (fields, file) {
+teamRouter.route('/logo/:id').post(function (req, res) {
+    var id = new objectId(req.params.id);
+    var form = new formidable.IncomingForm();
 
-            mongodb.connect(url, function (err, db) {
-                var collection = db.collection('teams');
-                collection.findOne({
-                        _id: id
-                    },
-                    function (err, results) {
-                        var newPath = path.join(form.uploadDir, results.teamName + path.extname(file.name))
-                        fs.rename(file.path, newPath, function () {
+    form.uploadDir = LOGOS_PATH;
+    form.on('file', function (fields, file) {
+        mongodb.connect(url, function (err, db) {
+            var collection = db.collection('teams');
+            collection.findOne({ _id: id }, function (err, results) {
+                var sanatizedTeamName = results.teamName.replace(/[^a-zA-Z0-9]/g, '');
+                var newPath = path.resolve(form.uploadDir, sanatizedTeamName + path.extname(file.name))
+                fs.rename(file.path, newPath, function () {
+                    var newThumbPath = path.resolve(form.uploadDir, sanatizedTeamName + '-thumb' + path.extname(file.name));
 
-                            easyimg.thumbnail({
-                                width: thumbnailDimension,
-                                height: thumbnailDimension,
-                                src: newPath,
-                                dst: path.join(form.uploadDir, results.teamName + '-thumb' + path.extname(file.name)),
-                                quality: 85
-                            }).then(function (img) {
-
-                            }, function (err) {
-                                console.log('failed');
-                            });
+                    // resize image and upload to s3
+                    return sharp(newPath)
+                        .resize(thumbnailDimension)
+                        .toFile(newThumbPath)
+                        .then(function () {
+                            return Promise.all([
+                                cloud.upload(config.awsBucket, S3_BUCKET_PATH, newPath),
+                                cloud.upload(config.awsBucket, S3_BUCKET_PATH, newThumbPath)
+                            ]);
+                        })
+                        .then(function () {
+                            // lastly store logo info and redirect page
+                            results.logo = sanatizedTeamName + path.extname(file.name);
+                            collection.updateOne({_id: id}, results);
+                            res.redirect('/teams/' + id);
+                        })
+                        .catch(function (err) {
+                            console.log('failed',err);
                         });
-                        results.logo = results.teamName + path.extname(file.name);
-                        collection.updateOne({
-                            _id: id
-                        }, results);
-
-
-
-                    });
+                });
             });
-
         });
 
-        form.on('end', function (fields, file) {
-            res.redirect('/teams/' + id)
-        });
-        form.parse(req);
     });
+
+    // parse the form for file
+    form.parse(req);
+});
 
 teamRouter.route('/:id')
     .get(function (req, res) {
