@@ -11,7 +11,7 @@ var Cloud = require('../cloud');
 var cloud = new Cloud();
 var thumbnailDimension = 200;
 var LOGOS_PATH = 'public/images/teamlogos';
-var S3_LOGOS_PATH = path.join(config.baseUrl, 'logos');
+var S3_LOGOS_PATH = `${config.baseUrl}/logos`;
 var S3_BUCKET_PATH = 'teams/logos';
 var url = 'mongodb://localhost:27017/72Fest';
 
