@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.117.0",
     "basic-auth": "^2.0.0",
     "body-parser": "^1.15.2",
     "easyimage": "^2.1.0",
@@ -19,7 +20,8 @@
     "formidable": "^1.0.17",
     "fs-extra": "^4.0.2",
     "markdown": "^0.5.0",
-    "mongodb": "^2.2.10"
+    "mongodb": "^2.2.10",
+    "sharp": "^0.18.3"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
