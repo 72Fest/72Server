@@ -9,7 +9,7 @@ module.exports = {
     {
       name      : '72cms',
       script    : 'app.js',
-      watch: true,
+      watch: ["*.js", "*.json", "src"],
       env: {
         NODE_ENV: 'development'
       },
